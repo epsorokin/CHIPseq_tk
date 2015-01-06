@@ -4,6 +4,8 @@ CHIPseq_tk
 
 Toolkit for ChIP-seq data analysis
 
+-- 
+
 **Annotation** 
 
 (1) Annotating ChIP-seq peaks by nearest promoters: Identify any transcription start sites 
@@ -16,6 +18,8 @@ Report output with one annotation per line.
 presenting the annotation information in a more condensed manner. 
 
 * Usage: python annotate_bidirectional_promoters_one_row_per_peak.py
+
+--
 
 **Motif analysis**
 
