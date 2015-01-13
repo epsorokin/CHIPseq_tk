@@ -48,19 +48,6 @@ if filename2=='':
 
 fastafile = SeqIO.parse(open(filename2),'fasta')
 
-# peak annotations
-
-annot_file='annotations.csv'
-
-annot_filehandle=csv.DictReader(open(annot_file, 'rb'), delimiter=',', quotechar='"')
-
-# read in annotations as dict
-
-annot={}
-
-for line in annot_filehandle:
-
-	annot.update({line['Peak-ID']: line['Gene-Name']})
 	
 # prefix name for output file
 
@@ -75,15 +62,16 @@ if prefix=='':
 
 motif_occurrences = []
 
-header= list(["Peak or Gene ID", "Gene Name", "Site Found", "Strand", "Location within 5' intergenic"]) 
+header= list(["Gene ID", "Gene Name", "Site Found", "Strand", "Location within 5' intergenic"]) 
 
 motif_occurrences.append(header)
 
-head_to_head_motifs = []
 
-header2= list(["Peak or Gene ID",  "Gene Name", "Total No Sites", "Distance between half-sites"])
+motif_summary = []
 
-head_to_head_motifs.append(header2)
+header2= list(["Gene ID", "Gene Name", "Total No Sites", "Locations"])
+
+motif_summary.append(header2)
 
 
 # 3. SEARCH FOR MEME MOTIF
@@ -101,23 +89,25 @@ for fasta in fastafile:
 	
 	# search for fwd sites
 	
+	motif_locations = []
+	
 	fwd_sites=0
 	
 	for pos1, seq1 in m.instances.search(fasta.seq):
 		
 		fwd_sites +=1
-
-		fasta.name=annot[fasta.id]
+	
 		
-		print ("%i %s" % (pos1, seq1)), "\t", fasta.name, "\t", fasta.id
+		print ("%i %s" % (pos1, seq1)), "\t", fasta.id
 		
-		motif_entry=[fasta.id, fasta.name, str(seq1), '+', pos1]
+		motif_entry=[fasta.id.split("|")[0], fasta.id.split("|")[1], str(seq1), '+', pos1]
 
 		# print ".....Trying to add this motif entry: ", motif_entry
 		
 		motif_occurrences.append(motif_entry)
 		
-		# print ".....Trying to save this:", motif_occurrences
+		motif_locations.append(pos1)
+		
 	# search for rev sites
 	
 	rc=m.reverse_complement()
@@ -128,39 +118,55 @@ for fasta in fastafile:
 	
 		rev_sites +=1
 		
-		fasta.name= annot[fasta.id]
+		print ("%i %s" % (pos2, seq2)), "\t", fasta.id
 		
-		print ("%i %s" % (pos2, seq2)), "\t", fasta.name, "\t", fasta.id
-		
-		motif_entry=[fasta.id, fasta.name, str(seq2), '-', pos2]
-		
-		# print ".....Trying to add this motif entry: ", motif_entry
-		
+		motif_entry=[fasta.id.split("|")[0], fasta.id.split("|")[1], str(seq2), '-', pos2]
+				
 		motif_occurrences.append(motif_entry)
 		
-# tally total sites and report distance between half sites
+		motif_locations.append(pos2)
+		
+# tally total sites and report their locations
+
+	total_sites = fwd_sites + rev_sites
+	
+	if total_sites > 0:
+		
+		entry = [fasta.id.split("|")[0], fasta.id.split("|")[1], total_sites, motif_locations]
+		
+		motif_summary.append(entry)
+	
+	# tally total sites and report distance between half sites
 
 	total_sites = fwd_sites + rev_sites
 	
 	if fwd_sites > 0 and rev_sites> 0:
 		
-		head_to_head_entry = [fasta.id, fasta.name, total_sites, int(pos1 - pos2)]
+		head_to_head_entry = [fasta.id, total_sites, int(pos1 - pos2)]
 		
 		head_to_head_motifs.append(head_to_head_entry)
+# # tally total sites and report distance between half sites
+
+	# total_sites = fwd_sites + rev_sites
 	
-	
+	# if fwd_sites > 0 and rev_sites> 0:
+		
+		# head_to_head_entry = [fasta.id, total_sites, int(pos1 - pos2)]
+		
+		# head_to_head_motifs.append(head_to_head_entry)
+		
 # 4.  WRITE TO OUTPUT FILE
 
 print ".....Writing output files. Done."
 
-with open( prefix + '_byPeak.csv', 'wb') as csvfile1:
+with open( prefix + '_MotifOccurrences.csv', 'wb') as csvfile1:
 
 	spamwriter= csv.writer(csvfile1, delimiter = ',')
 	
 	spamwriter.writerows(motif_occurrences)
 	
-with open(prefix + '_head2head.csv', 'wb') as csvfile:
+with open(prefix + '_MotifSummary.csv', 'wb') as csvfile:
 
 	spamwriter= csv.writer(csvfile, delimiter = ',')
 	
-	spamwriter.writerows(head_to_head_motifs)
+	spamwriter.writerows(motif_summary)
