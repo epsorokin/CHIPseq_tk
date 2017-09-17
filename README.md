@@ -1,40 +1,39 @@
-==========
 CHIPseq_tk
-==========
+=========
 
-Toolkit for ChIP-seq data analysis
+An all-purpose toolkit for downstream analyses of peaks derived from a ChIP-Seq study.
 
--- 
+* Annotation of ChIP peaks 
+* Motif analysis
 
-**Annotation** 
+#Peak Annotation
 
-(1) Annotating ChIP-seq peaks by nearest promoters: Identify any transcription start sites 
+Annotating ChIP-seq peaks by nearest promoters: Identify any transcription start sites 
 that occur within one kilobase of the midpoint of a ChIP peak in either direction. 
 Report output with one annotation per line. 
 
-* Usage: python annotate_bidirectional_promoters_v2.py 
+`Usage: python annotate_bidirectional_promoters_v2.py `
 
-(2) A second script performs the same task but spits out one line per peak, thus 
+A second script performs the same task but splits out one line per peak, thus 
 presenting the annotation information in a more condensed manner. 
 
-* Usage: python annotate_bidirectional_promoters_one_row_per_peak.py
+`Usage: python annotate_bidirectional_promoters_one_row_per_peak.py`
 
---
+#Motif Analysis 
 
-**Motif analysis**
+Motif searching within FASTA files using output from `MEME` as a starting point.
 
-(3) Motif searching within FASTA files using output from MEME as a starting point.
+`Usage: `
 
-* Usage: 
+`python motif_searcher_v3.py # Search from within peak sequences`
 
-python motif_searcher_v3.py # Search from within peak sequences
+`python global_motif_searcher.py # Search for within 5' intergenic regions or promoters`
 
-python global_motif_searcher.py # Search for within 5' intergenic regions or promoters
+Motif searching within FASTA files beginning with a user-defined motif. The first script searches from within peak sequences, the second script searches from across all genomic sequences for any pre-specified genome.
 
-(4) Motif searching within FASTA files beginning with a user-defined motif
+`Usage: 
 
-* Usage: 
+`python global_motif_searcher-user-defined-motif.py # Search from within peak sequences`
 
-python global_motif_searcher-user-defined-motif.py # Search from within peak sequences
+`python peak_motif_searcher-user-defined-motif.py # Search from within genomic sequences`
 
-python peak_motif_searcher-user-defined-motif.py # Search from within genomic sequences 
