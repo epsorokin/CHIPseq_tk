@@ -31,9 +31,9 @@ Motif searching within FASTA files using output from `MEME` as a starting point.
 
 Motif searching within FASTA files beginning with a user-defined motif. The first script searches from within peak sequences, the second script searches from across all genomic sequences for any pre-specified genome.
 
-`Usage: 
+`Usage: `
 
-`python global_motif_searcher-user-defined-motif.py # Search from within peak sequences`
+`python global_motif_searcher-user-defined-motif.py`
 
-`python peak_motif_searcher-user-defined-motif.py # Search from within genomic sequences`
+`python peak_motif_searcher-user-defined-motif.py`
 
