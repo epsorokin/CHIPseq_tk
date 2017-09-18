@@ -6,7 +6,7 @@ An all-purpose toolkit for downstream analyses of peaks derived from a ChIP-Seq 
 * Annotation of ChIP peaks 
 * Motif analysis
 
-#Peak Annotation
+Peak Annotation
 
 Annotating ChIP-seq peaks by nearest promoters: Identify any transcription start sites 
 that occur within one kilobase of the midpoint of a ChIP peak in either direction. 
@@ -19,7 +19,7 @@ presenting the annotation information in a more condensed manner.
 
 `Usage: python annotate_bidirectional_promoters_one_row_per_peak.py`
 
-#Motif Analysis 
+Motif Analysis 
 
 Motif searching within FASTA files using output from `MEME` as a starting point.
 
