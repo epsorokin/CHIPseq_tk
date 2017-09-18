@@ -1,18 +1,19 @@
-CHIPseq_tk
+CHIPseq_tk: A toolkit for ChIP-Seq 
 =========
 
-An all-purpose toolkit for downstream analyses of peaks derived from a ChIP-Seq study.
+An all-purpose toolkit for downstream analyses of peaks derived from a ChIP-Seq study. This could be either a public resource such as `ENCODE` or `modENCODE` or your own dataset, with peaks called from `MACS2`, `HOMER` or another peak-caller. 
 
 * Annotation of ChIP peaks 
 * Motif analysis
 
 Peak Annotation
+-----------
 
 Annotating ChIP-seq peaks by nearest promoters: Identify any transcription start sites 
 that occur within one kilobase of the midpoint of a ChIP peak in either direction. 
 Report output with one annotation per line. 
 
-`Usage: python annotate_bidirectional_promoters_v2.py `
+`Usage: python annotate_bidirectional_promoters_v2.py`
 
 A second script performs the same task but splits out one line per peak, thus 
 presenting the annotation information in a more condensed manner. 
@@ -20,6 +21,7 @@ presenting the annotation information in a more condensed manner.
 `Usage: python annotate_bidirectional_promoters_one_row_per_peak.py`
 
 Motif Analysis 
+-----------
 
 Motif searching within FASTA files using output from `MEME` as a starting point.
 
