@@ -3,6 +3,8 @@ CHIPseq_tk: A toolkit for ChIP-Seq
 
 An all-purpose toolkit for downstream analyses of peaks derived from a ChIP-Seq study. This could be either a public resource such as `ENCODE` or `modENCODE` or your own dataset, with peaks called from `MACS2`, `HOMER` or another peak-caller. 
 
+* Differential peak calling 
+    ( e.g. between an epitope-tagged or GFP-fusion protein of interest and the relevant control) 
 * Annotation of ChIP peaks 
 * Motif analysis
 
